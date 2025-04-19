@@ -1,6 +1,6 @@
 output "region" {
   description = "The AWS region where resources are created"
-  value       = us-east-1
+  value       = "us-east-1"
 }
 
 output "vpc_id" {
@@ -26,7 +26,7 @@ output "cluster_endpoint" {
   value = module.eks.cluster_endpoint
 }
 output "public_ip" {
-  value = module.ec2.public_ip
+  value = module.ec2_instance.public_ip
 }
 
 output "eks_node_group_public_ips" {
