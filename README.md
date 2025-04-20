@@ -479,4 +479,8 @@ chmod +x deploy.sh
 
 - When the Ansible playbook runs, it installs all required tools and displays the initial Jenkins admin password, which can be used to unlock Jenkins on first access.
 
+### Accessing the Jenkins
 
+1. Open your web browser
+2. Visit [http://localhost:8080](http://localhost:8080)
+3. You should see the Jenkins Page!
