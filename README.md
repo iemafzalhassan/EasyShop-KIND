@@ -221,7 +221,13 @@ docker ps
 # View container logs
 docker logs easyshop
 docker logs easyshop-mongodb
-
+# To Push Docker image on Docker hub
+docker login
+Enter User Name
+Enter PAT
+# You will show the Message Login Success.
+docker tag iamge-name dockeruserName/images-name:latest
+docker push dockeruserName/images-name:latest
 # Stop containers
 docker stop easyshop easyshop-mongodb
 
@@ -388,3 +394,93 @@ kind create cluster --name easyshop
 # Deploy the application locally
 kubectl apply -f kubernetes/
 ```
+## Production Deployment
+
+# Infrastructure Automation Using Terraform (IAC) & Ansible(Configuration Management)
+
+This project automates the setup of a DevOps environment on a target server using Ansible and a shell script.
+
+## 🔧 Tools Installed
+
+The following tools are installed automatically via the `deploy.sh` script:
+- Jenkins
+- Docker
+- Helm
+- Trivy (Security scanner)
+- kubectl
+- Kind (Kubernetes in Docker)
+
+---
+
+---
+
+## ⚙️ Prerequisites
+
+- A Linux-based target machine (e.g., EC2, VM).
+- SSH access to the target (with private key).
+- Ansible installed **on your local machine**.
+- `deploy.sh` and `playbook.yml` should be present in the repository.
+
+---
+
+## 🚀 How to Use
+
+### 1. Setup Infrastructure (optional, if using Terraform)
+
+```bash
+cd terraform-project
+terraform init
+terraform apply -auto-approve
+```
+
+> This will provision your infrastructure (e.g., an EC2 instance) and deploy only Infrasture.
+
+---
+
+### 2. Configure Ansible Inventory
+
+Edit the `ansible/inventory` file and add your target host details:
+
+```ini
+[target]
+your.remote.ip.address ansible_user=ubuntu ansible_ssh_private_key_file=~/.ssh/your-key.pem
+```
+
+Make sure the path to your private key is correct and has appropriate permissions.
+
+---
+
+### 3. Run Ansible Playbook
+
+```bash
+cd easyshop-hack
+.deploy.sh
+```
+
+> The deploy.sh script executes on the target machine, runs the Terraform code, and installs all required tools including Jenkins, Docker, Helm, Trivy, kubectl, and Kind, making Jenkins accessible from the configured host.
+
+---
+
+## 📜 Notes
+
+- Make sure the `deploy.sh` script is executable before running:
+
+```bash
+chmod +x deploy.sh
+```
+
+- You can customize `deploy.sh` to install or configure additional tools/services.
+- You can extend the playbook to validate installations or apply post-deployment configurations.
+
+---
+
+✅ Output
+- After successful execution of Terraform, the public IP of the target EC2 instance will be displayed in the output.
+
+- When the Ansible playbook runs, it installs all required tools and displays the initial Jenkins admin password, which can be used to unlock Jenkins on first access.
+
+### Accessing the Jenkins
+
+1. Open your web browser
+2. Visit [http://localhost:8080](http://localhost:8080)
+3. You should see the Jenkins Page!
